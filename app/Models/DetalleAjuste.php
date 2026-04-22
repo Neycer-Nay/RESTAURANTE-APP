@@ -6,5 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleAjuste extends Model
 {
-    //
+    protected $table = 'detalle_ajustes';
+
+    protected $fillable = [
+        'id_ajuste',
+        'id_producto',
+        'cantidad',
+    ];
+
+    public function ajusteInventario()
+    {
+        return $this->belongsTo(AjusteInventario::class, 'id_ajuste');
+    }
+
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class, 'id_producto');
+    }
 }

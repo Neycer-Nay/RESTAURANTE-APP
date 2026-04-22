@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_caja')->constrained('cajas', 'id');
             $table->foreignId('id_usuario')->constrained('users');
-            $table->foreignId('id_proveedor')->nullable()->constrained('proveedores', 'id')->nullOnDelete();
+            $table->foreignId('id_proveedor')->nullable()->constrained('proveedors', 'id')->nullOnDelete();
             $table->datetime('fecha_compra')->useCurrent();
             $table->decimal('subtotal', 10, 2);
             $table->decimal('total', 10, 2);
