@@ -9,11 +9,23 @@ class Venta extends Model
     protected $table = 'ventas';
 
     protected $fillable = [
+        'id_caja',
         'id_cliente',
         'id_usuario',
         'fecha_venta',
-        'total_venta',
+        'subtotal',
+        'total',
+        'estado',
     ];
+
+    protected $casts = [
+        'estado' => 'boolean',
+    ];
+
+    public function caja()
+    {
+        return $this->belongsTo(Caja::class, 'id_caja');
+    }
 
     public function cliente()
     {

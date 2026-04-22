@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('detalle')->nullable();
             $table->datetime('fecha_movimiento')->useCurrent();
             $table->foreignId('id_caja')->constrained('cajas', 'id')->onDelete('cascade');
+            $table->foreignId('id_usuario')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

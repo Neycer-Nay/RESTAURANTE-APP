@@ -9,10 +9,18 @@ class Proveedor extends Model
     protected $table = 'proveedors';
 
     protected $fillable = [
-        'nombre_proveedor',
+        'razon_social',
+        'nombre_contacto',
         'telefono',
-        'direccion',
         'email',
+        'direccion',
+        'tipo_documento',
+        'numero_documento',
+        'activo',
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     public function compras()

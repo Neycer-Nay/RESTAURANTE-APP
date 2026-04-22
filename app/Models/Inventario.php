@@ -10,7 +10,10 @@ class Inventario extends Model
 
     protected $fillable = [
         'id_producto',
-        'cantidad',
+        'cantidad_actual',
+        'cantidad_minima',
+        'cantidad_maxima',
+        'ultima_actualizacion',
     ];
 
     public function producto()

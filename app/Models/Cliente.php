@@ -9,9 +9,18 @@ class Cliente extends Model
     protected $table = 'clientes';
 
     protected $fillable = [
-        'nombre_cliente',
-        'telefono',
+        'nombre_completo',
+        'razon_social',
         'email',
+        'telefono',
+        'direccion',
+        'tipo_documento',
+        'numero_documento',
+        'activo',
+    ];
+
+    protected $casts = [
+        'activo' => 'boolean',
     ];
 
     public function ventas()

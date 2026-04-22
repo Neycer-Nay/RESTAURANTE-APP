@@ -11,6 +11,11 @@ class Categoria extends Model
     protected $fillable = [
         'nombre_categoria',
         'descripcion',
+        'estado',
+    ];
+
+    protected $casts = [
+        'estado' => 'boolean',
     ];
 
     public function productos()

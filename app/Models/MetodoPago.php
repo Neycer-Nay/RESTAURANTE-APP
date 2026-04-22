@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class MetodoPago extends Model
 {
-    protected $table = 'metodos_pago';
+    protected $table = 'metodo_pagos';
 
     protected $fillable = [
         'nombre_metodo',
-        'descripcion',
     ];
 
     public function ventas()

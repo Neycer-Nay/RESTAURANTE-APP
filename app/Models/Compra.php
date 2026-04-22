@@ -37,4 +37,9 @@ class Compra extends Model
     {
         return $this->hasMany(DetalleCompra::class, 'id_compra');
     }
+
+    public function pagosCompra()
+    {
+        return $this->hasMany(PagoCompra::class, 'id_compra');
+    }
 }

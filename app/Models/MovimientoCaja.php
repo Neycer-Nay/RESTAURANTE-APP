@@ -15,6 +15,7 @@ class MovimientoCaja extends Model
         'monto',
         'fecha_movimiento',
         'concepto',
+        'detalle',
     ];
 
     public function caja()
@@ -25,10 +26,5 @@ class MovimientoCaja extends Model
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');
-    }
-
-    public function tipoMovimiento()
-    {
-        return $this->belongsTo(TipoMovimiento::class, 'tipo_movimiento');
     }
 }

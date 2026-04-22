@@ -9,12 +9,18 @@ class Caja extends Model
     protected $table = 'cajas';
 
     protected $fillable = [
-        'nombre_caja',
-        'saldo_inicial',
-        'saldo_final',
+        'id_usuario',
         'fecha_apertura',
         'fecha_cierre',
+        'monto_apertura',
+        'monto_cierre',
+        'estado_caja',
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
+    }
 
     public function compras()
     {

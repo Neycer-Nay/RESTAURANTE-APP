@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->unsignedBigInteger('id_rol')->nullable();
+            $table->foreign('id_rol')->references('id')->on('rols')->nullOnDelete();
             $table->boolean('activo')->default(true);
             $table->timestamps();
         });
