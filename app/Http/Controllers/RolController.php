@@ -3,63 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rol;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class RolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        $roles = Rol::query()
+            ->withCount('usuarios')
+            ->latest('id')
+            ->paginate(10);
+
+        return view('roles.index', compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('roles.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'nombre_rol' => ['required', 'string', 'max:50', 'unique:rols,nombre_rol'],
+            'descripcion' => ['nullable', 'string'],
+        ]);
+
+        Rol::create($data);
+
+        return redirect()->route('roles.index')->with('success', 'Rol creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Rol $rol)
+    public function edit(Rol $role): View
     {
-        //
+        return view('roles.edit', ['role' => $role]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Rol $rol)
+    public function update(Request $request, Rol $role): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'nombre_rol' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('rols', 'nombre_rol')->ignore($role->id),
+            ],
+            'descripcion' => ['nullable', 'string'],
+        ]);
+
+        $role->update($data);
+
+        return redirect()->route('roles.index')->with('success', 'Rol actualizado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Rol $rol)
+    public function destroy(Rol $role): RedirectResponse
     {
-        //
-    }
+        if ($role->usuarios()->exists()) {
+            return redirect()->route('roles.index')->with('error', 'No se puede eliminar un rol con usuarios asignados.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Rol $rol)
-    {
-        //
+        $role->delete();
+
+        return redirect()->route('roles.index')->with('success', 'Rol eliminado correctamente.');
     }
 }
