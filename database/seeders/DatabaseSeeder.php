@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         RolesTableSeeder::class,
         MetodosPagoTableSeeder::class,
         TiposAjusteTableSeeder::class,
+        AdminSeeder::class,
         ]);
 
         /*User::factory()->create([

@@ -15,6 +15,12 @@ class AjusteInventario extends Model
         'concepto',
     ];
 
+    protected $casts = [
+        'id_usuario' => 'integer',
+        'tipo_ajuste' => 'integer',
+        'fecha_ajuste' => 'datetime',
+    ];
+
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');

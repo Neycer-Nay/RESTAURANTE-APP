@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-class metodosPagoTableSeeder extends Seeder
+class MetodosPagoTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

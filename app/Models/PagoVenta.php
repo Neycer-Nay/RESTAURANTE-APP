@@ -6,12 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class PagoVenta extends Model
 {
-    protected $table = 'pagos_venta';
+    protected $table = 'pago_ventas';
 
     protected $fillable = [
         'id_venta',
         'id_metodo_pago',
-        'monto_pagado',
+        'monto',
+        'referencia',
+    ];
+
+    protected $casts = [
+        'id_venta' => 'integer',
+        'id_metodo_pago' => 'integer',
+        'monto' => 'decimal:2',
     ];
 
     public function venta()

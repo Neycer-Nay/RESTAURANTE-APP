@@ -16,6 +16,14 @@ class DetalleCompra extends Model
         'subtotal',
     ];
 
+    protected $casts = [
+        'id_compra' => 'integer',
+        'id_producto' => 'integer',
+        'cantidad' => 'integer',
+        'precio_unitario' => 'decimal:2',
+        'subtotal' => 'decimal:2',
+    ];
+
     public function compra()
     {
         return $this->belongsTo(Compra::class, 'id_compra');

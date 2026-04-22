@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'id_rol',
+        'activo',
     ];
 
     /**
@@ -44,6 +46,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'id_rol' => 'integer',
+            'activo' => 'boolean',
         ];
     }
     
@@ -60,6 +64,16 @@ class User extends Authenticatable
     public function compras()
     {
         return $this->hasMany(Compra::class, 'id_usuario');
+    }
+
+    public function cajas()
+    {
+        return $this->hasMany(Caja::class, 'id_usuario');
+    }
+
+    public function ajustesInventario()
+    {
+        return $this->hasMany(AjusteInventario::class, 'id_usuario');
     }
     
 }

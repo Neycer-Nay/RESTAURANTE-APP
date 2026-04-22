@@ -6,12 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class PagoCompra extends Model
 {
-    protected $table = 'pagos_compras';
+    protected $table = 'pago_compras';
 
     protected $fillable = [
         'id_compra',
         'id_metodo_pago',
-        'monto_pagado',
+        'monto',
+        'referencia',
+    ];
+
+    protected $casts = [
+        'id_compra' => 'integer',
+        'id_metodo_pago' => 'integer',
+        'monto' => 'decimal:2',
     ];
 
     public function compra()

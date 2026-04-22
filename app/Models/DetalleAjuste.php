@@ -14,6 +14,12 @@ class DetalleAjuste extends Model
         'cantidad',
     ];
 
+    protected $casts = [
+        'id_ajuste' => 'integer',
+        'id_producto' => 'integer',
+        'cantidad' => 'integer',
+    ];
+
     public function ajusteInventario()
     {
         return $this->belongsTo(AjusteInventario::class, 'id_ajuste');

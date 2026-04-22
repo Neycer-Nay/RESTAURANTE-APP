@@ -10,10 +10,18 @@ class MovimientoInventario extends Model
 
     protected $fillable = [
         'id_producto',
+        'tipo_movimiento',
         'cantidad',
-        'tipo_movimiento', // 'entrada' o 'salida'
+        'referencia_id',
         'fecha_movimiento',
         'concepto',
+    ];
+
+    protected $casts = [
+        'id_producto' => 'integer',
+        'cantidad' => 'integer',
+        'referencia_id' => 'integer',
+        'fecha_movimiento' => 'datetime',
     ];
 
     public function producto()

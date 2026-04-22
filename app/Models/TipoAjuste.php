@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoAjuste extends Model
 {
-    protected $table = 'tipos_ajuste';
+    protected $table = 'tipo_ajustes';
 
     protected $fillable = [
-        'nombre_ajuste',
+        'nombre_tipo',
         'descripcion',
     ];
 
     public function ajustes()
     {
-        return $this->hasMany(Ajuste::class, 'id_tipo_ajuste');
+        return $this->hasMany(AjusteInventario::class, 'tipo_ajuste');
     }
 }

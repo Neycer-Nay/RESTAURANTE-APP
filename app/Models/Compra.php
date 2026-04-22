@@ -18,6 +18,16 @@ class Compra extends Model
         'estado',
     ];
 
+    protected $casts = [
+        'id_caja' => 'integer',
+        'id_usuario' => 'integer',
+        'id_proveedor' => 'integer',
+        'fecha_compra' => 'datetime',
+        'subtotal' => 'decimal:2',
+        'total' => 'decimal:2',
+        'estado' => 'boolean',
+    ];
+
     public function caja()
     {
         return $this->belongsTo(Caja::class, 'id_caja');
@@ -36,5 +46,10 @@ class Compra extends Model
     public function detalles()
     {
         return $this->hasMany(DetalleCompra::class, 'id_compra');
+    }
+
+    public function pagosCompra()
+    {
+        return $this->hasMany(PagoCompra::class, 'id_compra');
     }
 }
