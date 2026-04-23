@@ -3,63 +3,76 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proveedor;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProveedorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        $proveedores = Proveedor::query()
+            ->latest('id')
+            ->paginate(10);
+
+        return view('proveedores.index', compact('proveedores'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('proveedores.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'razon_social' => ['required', 'string', 'max:150'],
+            'nombre_contacto' => ['nullable', 'string', 'max:100'],
+            'telefono' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:100'],
+            'direccion' => ['nullable', 'string'],
+            'tipo_documento' => ['required', 'in:CI,NIT,Pasaporte,Otro'],
+            'numero_documento' => ['nullable', 'string', 'max:50'],
+            'activo' => ['required', 'boolean'],
+        ]);
+
+        Proveedor::create($data);
+
+        return redirect()->route('proveedores.index')->with('swal_success', 'Proveedor creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Proveedor $proveedor)
+    public function edit(Proveedor $proveedor): View
     {
-        //
+        return view('proveedores.edit', compact('proveedor'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Proveedor $proveedor)
+    public function update(Request $request, Proveedor $proveedor): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'razon_social' => ['required', 'string', 'max:150'],
+            'nombre_contacto' => ['nullable', 'string', 'max:100'],
+            'telefono' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:100'],
+            'direccion' => ['nullable', 'string'],
+            'tipo_documento' => ['required', 'in:CI,NIT,Pasaporte,Otro'],
+            'numero_documento' => ['nullable', 'string', 'max:50'],
+            'activo' => ['required', 'boolean'],
+        ]);
+
+        $proveedor->update($data);
+
+        return redirect()->route('proveedores.index')->with('swal_success', 'Proveedor actualizado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Proveedor $proveedor)
+    public function destroy(Proveedor $proveedor): RedirectResponse
     {
-        //
-    }
+        try {
+            $proveedor->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Proveedor $proveedor)
-    {
-        //
+            return redirect()->route('proveedores.index')->with('swal_success', 'Proveedor eliminado correctamente.');
+        } catch (QueryException) {
+            return redirect()->route('proveedores.index')->with('error', 'No se pudo eliminar el proveedor porque tiene registros relacionados.');
+        }
     }
 }

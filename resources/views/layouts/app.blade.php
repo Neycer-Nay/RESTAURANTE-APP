@@ -366,6 +366,18 @@
                     href="{{ route('roles.index') }}">Roles</a> --}}
                 <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"
                     href="{{ route('users.index') }}">Usuarios</a>
+                <a class="nav-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}"
+                    href="{{ route('categorias.index') }}">Categorias</a>
+                <a class="nav-link {{ request()->routeIs('marcas.*') ? 'active' : '' }}"
+                    href="{{ route('marcas.index') }}">Marcas</a>
+                <a class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}"
+                    href="{{ route('clientes.index') }}">Clientes</a>
+                <a class="nav-link {{ request()->routeIs('proveedores.*') ? 'active' : '' }}"
+                    href="{{ route('proveedores.index') }}">Proveedores</a>
+                <a class="nav-link {{ request()->routeIs('metodos-pago.*') ? 'active' : '' }}"
+                    href="{{ route('metodos-pago.index') }}">Metodos de pago</a>
+                <a class="nav-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
+                    href="{{ route('productos.index') }}">Productos</a>
             </nav>
         </aside>
 
