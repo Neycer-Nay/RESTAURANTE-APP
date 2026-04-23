@@ -3,63 +3,73 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class MarcaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        $marcas = Marca::query()
+            ->withCount('productos')
+            ->latest('id')
+            ->paginate(10);
+
+        return view('marcas.index', compact('marcas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('marcas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'nombre_marca' => ['required', 'string', 'max:100', 'unique:marcas,nombre_marca'],
+            'descripcion' => ['nullable', 'string'],
+            'estado' => ['required', 'boolean'],
+        ]);
+
+        Marca::create($data);
+
+        return redirect()->route('marcas.index')->with('swal_success', 'Marca creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Marca $marca)
+    public function edit(Marca $marca): View
     {
-        //
+        return view('marcas.edit', compact('marca'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Marca $marca)
+    public function update(Request $request, Marca $marca): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'nombre_marca' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('marcas', 'nombre_marca')->ignore($marca->id),
+            ],
+            'descripcion' => ['nullable', 'string'],
+            'estado' => ['required', 'boolean'],
+        ]);
+
+        $marca->update($data);
+
+        return redirect()->route('marcas.index')->with('swal_success', 'Marca actualizada correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Marca $marca)
+    public function destroy(Marca $marca): RedirectResponse
     {
-        //
-    }
+        try {
+            $marca->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Marca $marca)
-    {
-        //
+            return redirect()->route('marcas.index')->with('swal_success', 'Marca eliminada correctamente.');
+        } catch (QueryException) {
+            return redirect()->route('marcas.index')->with('error', 'No se pudo eliminar la marca porque tiene registros relacionados.');
+        }
     }
 }
