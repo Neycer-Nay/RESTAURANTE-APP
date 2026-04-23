@@ -56,47 +56,4 @@
     </x-ui.table-card>
 @endsection
 
-@push('scripts')
-<script>
-    // Confirmación para todos los formularios con clase .delete-user-form
-    document.querySelectorAll('.delete-user-form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: '¿Eliminar usuario?',
-                text: "Esta acción no se puede deshacer.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.submit();
-                }
-            });
-        });
-    });
 
-    // Mostrar mensajes flash con SweetAlert2
-    @if(session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: '¡Hecho!',
-            text: '{{ session('success') }}',
-            timer: 3000,
-            showConfirmButton: false
-        });
-    @endif
-
-    @if(session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '{{ session('error') }}',
-            confirmButtonText: 'Entendido'
-        });
-    @endif
-</script>
-@endpush
