@@ -13,7 +13,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        
                         <th>Nombre</th>
                         <th>Descripcion</th>
                         <th>Usuarios</th>
@@ -23,7 +23,7 @@
                 <tbody>
                     @forelse ($roles as $role)
                         <tr>
-                            <td>{{ $role->id }}</td>
+                            
                             <td>{{ $role->nombre_rol }}</td>
                             <td>{{ $role->descripcion ?: '-' }}</td>
                             <td>{{ $role->usuarios_count }}</td>
@@ -31,11 +31,7 @@
                                 <div class="actions-inline">
                                     <a class="btn btn-light" href="{{ route('roles.edit', $role) }}">Editar</a>
 
-                                    <form method="POST" action="{{ route('roles.destroy', $role) }}" onsubmit="return confirm('Deseas eliminar este rol?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
+                                    
                                 </div>
                             </td>
                         </tr>

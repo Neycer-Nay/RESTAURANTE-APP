@@ -34,7 +34,7 @@ class RolController extends Controller
 
         Rol::create($data);
 
-        return redirect()->route('roles.index')->with('success', 'Rol creado correctamente.');
+        return redirect()->route('roles.index')->with('swal_success', 'Rol creado correctamente.');
     }
 
     public function edit(Rol $role): View
@@ -56,17 +56,11 @@ class RolController extends Controller
 
         $role->update($data);
 
-        return redirect()->route('roles.index')->with('success', 'Rol actualizado correctamente.');
+        return redirect()->route('roles.index')->with('swal_success', 'Rol actualizado correctamente.');
     }
 
-    public function destroy(Rol $role): RedirectResponse
+    public function destroy( )
     {
-        if ($role->usuarios()->exists()) {
-            return redirect()->route('roles.index')->with('error', 'No se puede eliminar un rol con usuarios asignados.');
-        }
-
-        $role->delete();
-
-        return redirect()->route('roles.index')->with('success', 'Rol eliminado correctamente.');
+        
     }
 }
