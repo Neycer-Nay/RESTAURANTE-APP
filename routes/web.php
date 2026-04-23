@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\MetodoPagoController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +29,15 @@ Route::middleware('auth.session')->group(function (): void {
 
     Route::resource('roles', RolController::class)->except('show');
     Route::resource('users', UserController::class)->except('show');
+
+    Route::resource('categorias', CategoriaController::class)->except('show');
+    Route::resource('marcas', MarcaController::class)->except('show');
+    Route::resource('clientes', ClienteController::class)->except('show');
+    Route::resource('proveedores', ProveedorController::class)
+        ->parameters(['proveedores' => 'proveedor'])
+        ->except('show');
+    Route::resource('metodos-pago', MetodoPagoController::class)
+        ->parameters(['metodos-pago' => 'metodoPago'])
+        ->except('show');
+    Route::resource('productos', ProductoController::class)->except('show');
 });
