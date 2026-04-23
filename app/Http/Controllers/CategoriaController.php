@@ -3,63 +3,73 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class CategoriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        $categorias = Categoria::query()
+            ->withCount('productos')
+            ->latest('id')
+            ->paginate(10);
+
+        return view('categorias.index', compact('categorias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('categorias.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'nombre_categoria' => ['required', 'string', 'max:100', 'unique:categorias,nombre_categoria'],
+            'descripcion' => ['nullable', 'string'],
+            'estado' => ['required', 'boolean'],
+        ]);
+
+        Categoria::create($data);
+
+        return redirect()->route('categorias.index')->with('swal_success', 'Categoria creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categoria $categoria)
+    public function edit(Categoria $categoria): View
     {
-        //
+        return view('categorias.edit', compact('categoria'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categoria $categoria)
+    public function update(Request $request, Categoria $categoria): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'nombre_categoria' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('categorias', 'nombre_categoria')->ignore($categoria->id),
+            ],
+            'descripcion' => ['nullable', 'string'],
+            'estado' => ['required', 'boolean'],
+        ]);
+
+        $categoria->update($data);
+
+        return redirect()->route('categorias.index')->with('swal_success', 'Categoria actualizada correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Categoria $categoria)
+    public function destroy(Categoria $categoria): RedirectResponse
     {
-        //
-    }
+        try {
+            $categoria->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Categoria $categoria)
-    {
-        //
+            return redirect()->route('categorias.index')->with('swal_success', 'Categoria eliminada correctamente.');
+        } catch (QueryException) {
+            return redirect()->route('categorias.index')->with('error', 'No se pudo eliminar la categoria porque tiene registros relacionados.');
+        }
     }
 }
