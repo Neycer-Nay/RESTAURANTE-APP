@@ -13,7 +13,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Rol</th>
@@ -24,7 +24,7 @@
                 <tbody>
                     @forelse ($users as $user)
                         <tr>
-                            <td>{{ $user->id }}</td>
+                            
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ optional($user->rol)->nombre_rol ?: 'Sin rol' }}</td>
@@ -37,11 +37,7 @@
                                 <div class="actions-inline">
                                     <a class="btn btn-light" href="{{ route('users.edit', $user) }}">Editar</a>
 
-                                    <form method="POST" action="{{ route('users.destroy', $user) }}" onsubmit="return confirm('Deseas eliminar este usuario?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
+                                    
                                 </div>
                             </td>
                         </tr>

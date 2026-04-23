@@ -377,7 +377,7 @@
                 </div>
 
                 <div class="topbar-right">
-                    <span class="user-chip">{{ auth()->user()->name }}</span>
+                    <span class="user-chip">{{ strtoupper(auth()->user()->name) }}</span>
 
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

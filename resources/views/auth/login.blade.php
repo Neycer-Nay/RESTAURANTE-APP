@@ -41,8 +41,8 @@
 </head>
 <body>
     <section class="login-card">
-        <h1 class="title">Sistema Restaurante</h1>
-        <p class="subtitle">Acceso de administracion</p>
+        <h1 class="title">Restaurante Jiba</h1>
+        
 
         <x-flash-messages />
 

@@ -44,7 +44,7 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.')->with('swal_success', 'Usuario creado correctamente.');
+        return redirect()->route('users.index')->with('swal_success', 'Usuario creado correctamente.');
     }
 
     public function edit(User $user): View
@@ -72,17 +72,8 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('users.index')->with('swal_success', 'Usuario actualizado correctamente.');
     }
 
-    public function destroy(User $user): RedirectResponse
-    {
-        if ((int) auth()->id() === (int) $user->id) {
-            return redirect()->route('users.index')->with('error', 'No puedes eliminar tu propio usuario.');
-        }
-
-        $user->delete();
-
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente.');
-    }
+    
 }
