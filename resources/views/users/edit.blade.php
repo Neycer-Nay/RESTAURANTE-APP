@@ -8,7 +8,7 @@
         <form method="POST" action="{{ route('users.update', $user) }}">
             @csrf
             @method('PUT')
-            @include('users.partials.form', [
+            @include('users.partials.formUpdate', [
                 'user' => $user,
                 'roles' => $roles,
                 'isEdit' => true,

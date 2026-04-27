@@ -44,6 +44,13 @@
         <textarea class="textarea" id="direccion" name="direccion">{{ old('direccion', optional($proveedor)->direccion) }}</textarea>
     </div>
 
+    <div class="field">
+        <label for="activo">Estado</label>
+        <select class="select" id="activo" name="activo" required>
+            <option value="1" @selected((string) old('activo', optional($proveedor)->activo ?? '1') === '1')>Activo</option>
+            <option value="0" @selected((string) old('activo', optional($proveedor)->activo) === '0')>Inactivo</option>
+        </select>
+    </div>
     
 </div>
 

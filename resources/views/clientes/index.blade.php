@@ -39,11 +39,7 @@
                             <td>
                                 <div class="actions-inline">
                                     <a class="btn btn-light" href="{{ route('clientes.edit', $cliente) }}">Editar</a>
-                                    <form method="POST" action="{{ route('clientes.destroy', $cliente) }}" onsubmit="return confirm('Deseas eliminar este cliente?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
+                                    
                                 </div>
                             </td>
                         </tr>

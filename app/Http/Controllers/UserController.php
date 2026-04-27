@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -29,15 +30,9 @@ class UserController extends Controller
         return view('users.create', compact('roles'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'id_rol' => ['nullable', 'exists:rols,id'],
-            
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+        $data = $request->validated();
 
         $data['activo'] = true;
         $data['password'] = Hash::make($data['password']);

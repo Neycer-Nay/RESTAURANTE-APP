@@ -5,7 +5,7 @@
 
 <div class="form-grid">
     <div class="field">
-        <label for="name">Nombre</label>
+        <label for="name" class="uppercase">Nombre</label>
         <input
             class="input"
             type="text"
@@ -18,7 +18,7 @@
     </div>
 
     <div class="field">
-        <label for="email">Correo</label>
+        <label for="email" class="uppercase">Correo</label>
         <input
             class="input"
             type="email"
@@ -31,7 +31,7 @@
     </div>
 
     <div class="field">
-        <label for="id_rol">Rol</label>
+        <label for="id_rol" class="uppercase">Rol</label>
         <select class="select" id="id_rol" name="id_rol">
             <option value="">Sin rol asignado</option>
             @foreach ($roles as $role)
@@ -45,16 +45,23 @@
         </select>
     </div>
 
-   
+    
 
     <div class="field">
-        <label for="password">Contrasena {{ $isEdit ? '(opcional)' : '' }}</label>
+        <label for="password" class="uppercase">Nueva contraseña {{ $isEdit ? '(opcional)' : '' }}</label>
         <input class="input" type="password" id="password" name="password" {{ $isEdit ? '' : 'required' }}>
     </div>
 
     <div class="field">
-        <label for="password_confirmation">Confirmar contrasena</label>
+        <label for="password_confirmation" class="uppercase">Confirmar contraseña</label>
         <input class="input" type="password" id="password_confirmation" name="password_confirmation" {{ $isEdit ? '' : 'required' }}>
+    </div>
+    <div class="field">
+        <label for="activo" class="uppercase">Estado</label>
+        <select class="select" id="activo" name="activo" required>
+            <option value="1" @selected((string) old('activo', optional($user)->activo ?? '1') === '1')>Activo</option>
+            <option value="0" @selected((string) old('activo', optional($user)->activo) === '0')>Inactivo</option>
+        </select>
     </div>
 </div>
 
