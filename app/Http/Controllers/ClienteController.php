@@ -34,9 +34,9 @@ class ClienteController extends Controller
             'direccion' => ['nullable', 'string'],
             'tipo_documento' => ['required', 'in:CI,NIT,Pasaporte,Otro'],
             'numero_documento' => ['nullable', 'string', 'max:50'],
-            'activo' => ['required', 'boolean'],
+            
         ]);
-
+        $data['activo'] = true;
         Cliente::create($data);
 
         return redirect()->route('clientes.index')->with('swal_success', 'Cliente creado correctamente.');
@@ -65,14 +65,8 @@ class ClienteController extends Controller
         return redirect()->route('clientes.index')->with('swal_success', 'Cliente actualizado correctamente.');
     }
 
-    public function destroy(Cliente $cliente): RedirectResponse
+    public function destroy()
     {
-        try {
-            $cliente->delete();
-
-            return redirect()->route('clientes.index')->with('swal_success', 'Cliente eliminado correctamente.');
-        } catch (QueryException) {
-            return redirect()->route('clientes.index')->with('error', 'No se pudo eliminar el cliente porque tiene registros relacionados.');
-        }
+        
     }
 }

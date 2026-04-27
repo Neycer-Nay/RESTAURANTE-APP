@@ -34,8 +34,9 @@ class ProveedorController extends Controller
             'direccion' => ['nullable', 'string'],
             'tipo_documento' => ['required', 'in:CI,NIT,Pasaporte,Otro'],
             'numero_documento' => ['nullable', 'string', 'max:50'],
-            'activo' => ['required', 'boolean'],
+            
         ]);
+        $data['activo'] = true;
 
         Proveedor::create($data);
 
@@ -65,14 +66,8 @@ class ProveedorController extends Controller
         return redirect()->route('proveedores.index')->with('swal_success', 'Proveedor actualizado correctamente.');
     }
 
-    public function destroy(Proveedor $proveedor): RedirectResponse
+    public function destroy()
     {
-        try {
-            $proveedor->delete();
-
-            return redirect()->route('proveedores.index')->with('swal_success', 'Proveedor eliminado correctamente.');
-        } catch (QueryException) {
-            return redirect()->route('proveedores.index')->with('error', 'No se pudo eliminar el proveedor porque tiene registros relacionados.');
-        }
+        
     }
 }

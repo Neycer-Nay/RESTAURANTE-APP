@@ -62,14 +62,8 @@ class CategoriaController extends Controller
         return redirect()->route('categorias.index')->with('swal_success', 'Categoria actualizada correctamente.');
     }
 
-    public function destroy(Categoria $categoria): RedirectResponse
+    public function destroy()
     {
-        try {
-            $categoria->delete();
-
-            return redirect()->route('categorias.index')->with('swal_success', 'Categoria eliminada correctamente.');
-        } catch (QueryException) {
-            return redirect()->route('categorias.index')->with('error', 'No se pudo eliminar la categoria porque tiene registros relacionados.');
-        }
+        
     }
 }

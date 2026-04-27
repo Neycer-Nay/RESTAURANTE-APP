@@ -8,7 +8,7 @@
         <form method="POST" action="{{ route('proveedores.update', $proveedor) }}">
             @csrf
             @method('PUT')
-            @include('proveedores.partials.form', ['proveedor' => $proveedor, 'submitLabel' => 'Actualizar proveedor'])
+            @include('proveedores.partials.formUpdate', ['proveedor' => $proveedor, 'submitLabel' => 'Actualizar proveedor'])
         </form>
     </x-ui.form-card>
 @endsection
