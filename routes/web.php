@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CajaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MetodoPagoController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,4 +43,12 @@ Route::middleware('auth.session')->group(function (): void {
         ->parameters(['metodos-pago' => 'metodoPago'])
         ->except('show');
     Route::resource('productos', ProductoController::class)->except('show');
+
+    Route::resource('cajas', CajaController::class)->except(['edit', 'update', 'destroy']);
+    Route::post('cajas/{caja}/cerrar', [CajaController::class, 'close'])->name('cajas.cerrar');
+
+    Route::resource('ventas', VentaController::class)->except(['edit', 'update', 'destroy']);
+    Route::post('ventas/{venta}/anular', [VentaController::class, 'anular'])->name('ventas.anular');
+
+    Route::resource('compras', CompraController::class)->except(['edit', 'update', 'destroy']);
 });
