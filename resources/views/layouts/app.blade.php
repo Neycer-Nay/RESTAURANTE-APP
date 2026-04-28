@@ -81,6 +81,73 @@
             font-weight: 600;
         }
 
+        .nav-dropdown {}
+
+        .nav-dropdown-toggle {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-dropdown-toggle:hover {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        .nav-dropdown-toggle .arrow {
+            transition: transform 0.25s ease;
+            font-size: 12px;
+        }
+
+        .nav-dropdown.open .nav-dropdown-toggle .arrow {
+            transform: rotate(180deg);
+        }
+
+        .nav-dropdown-menu {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.25s ease;
+        }
+
+        .nav-dropdown.open .nav-dropdown-menu {
+            grid-template-rows: 1fr;
+        }
+
+        .nav-dropdown-menu > div {
+            overflow: hidden;
+        }
+
+        .nav-dropdown-item {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 8px 12px 8px 28px;
+            border-radius: 8px;
+            display: block;
+            font-size: 14px;
+        }
+
+        .nav-dropdown-item:hover {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        .nav-dropdown-item.active {
+            color: #5eead4;
+            font-weight: 600;
+        }
+
+        .nav-dropdown.open .nav-dropdown-toggle,
+        .nav-dropdown-toggle.active {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
         .panel {
             display: flex;
             flex-direction: column;
@@ -366,18 +433,78 @@
                     href="{{ route('roles.index') }}">Roles</a> --}}
                 <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"
                     href="{{ route('users.index') }}">Usuarios</a>
-                <a class="nav-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}"
-                    href="{{ route('categorias.index') }}">Categorias</a>
-                <a class="nav-link {{ request()->routeIs('marcas.*') ? 'active' : '' }}"
-                    href="{{ route('marcas.index') }}">Marcas</a>
+
+                {{-- Inventario --}}
+                <div class="nav-dropdown {{ request()->routeIs('productos.*','categorias.*','marcas.*') ? 'open' : '' }}">
+                    <div class="nav-dropdown-toggle {{ request()->routeIs('productos.*','categorias.*','marcas.*') ? 'active' : '' }}">
+                        <span>Inventario</span>
+                        <span class="arrow">&#9662;</span>
+                    </div>
+                    <div class="nav-dropdown-menu">
+                        <div>
+                            <a class="nav-dropdown-item {{ request()->routeIs('productos.*') ? 'active' : '' }}"
+                                href="{{ route('productos.index') }}">Productos</a>
+                            <a class="nav-dropdown-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}"
+                                href="{{ route('categorias.index') }}">Categorias</a>
+                            <a class="nav-dropdown-item {{ request()->routeIs('marcas.*') ? 'active' : '' }}"
+                                href="{{ route('marcas.index') }}">Marcas</a>
+                        </div>
+                    </div>
+                </div>
+
                 <a class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}"
                     href="{{ route('clientes.index') }}">Clientes</a>
                 <a class="nav-link {{ request()->routeIs('proveedores.*') ? 'active' : '' }}"
                     href="{{ route('proveedores.index') }}">Proveedores</a>
-                <a class="nav-link {{ request()->routeIs('metodos-pago.*') ? 'active' : '' }}"
-                    href="{{ route('metodos-pago.index') }}">Metodos de pago</a>
-                <a class="nav-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
-                    href="{{ route('productos.index') }}">Productos</a>
+
+                <a class="nav-link {{ request()->routeIs('cajas.*') ? 'active' : '' }}"
+                    href="{{ route('cajas.index') }}">Caja</a>
+
+                {{-- Ventas --}}
+                <div class="nav-dropdown {{ request()->routeIs('ventas.*') ? 'open' : '' }}">
+                    <div class="nav-dropdown-toggle {{ request()->routeIs('ventas.*') ? 'active' : '' }}">
+                        <span>Ventas</span>
+                        <span class="arrow">&#9662;</span>
+                    </div>
+                    <div class="nav-dropdown-menu">
+                        <div>
+                            <a class="nav-dropdown-item {{ request()->routeIs('ventas.create') ? 'active' : '' }}"
+                                href="{{ route('ventas.create') }}">Nueva venta</a>
+                            <a class="nav-dropdown-item {{ request()->routeIs('ventas.index') ? 'active' : '' }}"
+                                href="{{ route('ventas.index') }}">Historial</a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Compras --}}
+                <div class="nav-dropdown {{ request()->routeIs('compras.*') ? 'open' : '' }}">
+                    <div class="nav-dropdown-toggle {{ request()->routeIs('compras.*') ? 'active' : '' }}">
+                        <span>Compras</span>
+                        <span class="arrow">&#9662;</span>
+                    </div>
+                    <div class="nav-dropdown-menu">
+                        <div>
+                            <a class="nav-dropdown-item {{ request()->routeIs('compras.create') ? 'active' : '' }}"
+                                href="{{ route('compras.create') }}">Nueva compra</a>
+                            <a class="nav-dropdown-item {{ request()->routeIs('compras.index') ? 'active' : '' }}"
+                                href="{{ route('compras.index') }}">Historial</a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Configuracion --}}
+                <div class="nav-dropdown {{ request()->routeIs('metodos-pago.*') ? 'open' : '' }}">
+                    <div class="nav-dropdown-toggle {{ request()->routeIs('metodos-pago.*') ? 'active' : '' }}">
+                        <span>Configuracion</span>
+                        <span class="arrow">&#9662;</span>
+                    </div>
+                    <div class="nav-dropdown-menu">
+                        <div>
+                            <a class="nav-dropdown-item {{ request()->routeIs('metodos-pago.*') ? 'active' : '' }}"
+                                href="{{ route('metodos-pago.index') }}">Metodos de pago</a>
+                        </div>
+                    </div>
+                </div>
             </nav>
         </aside>
 
@@ -419,6 +546,17 @@
             });
         </script>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.nav-dropdown-toggle').forEach(function (toggle) {
+                toggle.addEventListener('click', function () {
+                    var dropdown = toggle.closest('.nav-dropdown');
+                    dropdown.classList.toggle('open');
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
